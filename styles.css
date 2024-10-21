@@ -1,0 +1,133 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text color */
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+}
+
+#character {
+    margin-bottom: 20px;
+}
+
+.habit-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Reduced gap between habits */
+}
+
+.habit {
+    background: #1e1e1e; /* Darker background for habit cards */
+    padding: 10px; /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Softer shadow */
+}
+
+/* Smaller h3 Styling */
+.habit h3 {
+    font-size: 16px; /* Reduced font size */
+    margin: 0 0 5px 0; /* Reduced bottom margin */
+}
+
+.progress-section {
+    display: flex;
+    align-items: center;
+}
+
+.progress-bar {
+    background-color: #333; /* Dark background for progress bar */
+    border-radius: 8px;
+    overflow: hidden;
+    height: 15px; /* Reduced height */
+    width: 100%;
+    margin-left: 10px;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background-size: cover;
+    transition: width 0.5s ease;
+}
+
+/* Button Styles */
+button {
+    padding: 8px 16px; /* Reduced button size */
+    background-color: #76c7c0; /* Button color remains the same for contrast */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #555; /* Darker disabled button color */
+    cursor: not-allowed;
+}
+
+/* Progress Bar Aesthetics */
+.flame-bar .progress {
+    background-image: url('flames.gif'); /* Replace with actual flame animation or effect */
+    background-color: #ff4500;
+}
+
+.wave-bar .progress {
+    background-image: url('waves.gif'); /* Replace with actual wave animation or effect */
+    background-color: #1e90ff;
+}
+
+.lightning-bar .progress {
+    background-image: url('lightning.gif'); /* Replace with actual lightning animation or effect */
+    background-color: #ffff00;
+}
+
+.star-bar .progress {
+    background-image: url('stars.gif'); /* Replace with actual star animation or effect */
+    background-color: #ff69b4;
+}
+
+
+.register-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* styles.css */
+.full-page-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1; /* Make sure it's behind all content */
+}
+
+.login-container, .register-container {
+    position: relative;
+    z-index: 1; /* Ensure content is on top of the background */
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background for readability */
+    padding: 20px;
+    border-radius: 10px;
+}

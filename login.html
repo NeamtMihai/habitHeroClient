@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Habit Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="full-page-background" id="background"></div>
+    <div class="login-container">
+        <h1>Login to Habit Tracker</h1>
+        <form id="loginForm">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p id="error-message" style="color:red; display:none;"></p>
+        <p id="success-message" style="color:green; display:none;"></p>
+        <p>Don't have an account? <a href="register.html">Register here</a>.</p>
+    </div>
+</div>
+
+    <script>
+        const backgrounds = ['flames.gif', 'lightning.gif', 'waves.gif', 'stars.gif'];
+        const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+        document.getElementById('background').style.backgroundImage = `url('${randomBackground}')`;
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+
+            // Prepare the data for login
+            const data = {
+                name: username,
+                pass: password
+            };
+
+            // Send login request
+            fetch('https://habitheroserver-production.up.railway.app/login', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'elvetia_tara_faina', // Use your API key here
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Login failed: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Assuming the API returns user data with a user ID
+                const userId = data.id; // Adjust this based on your actual API response
+                successMessage.textContent = 'Login successful! Redirecting...';
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+
+                // Save the user ID to sessionStorage
+                sessionStorage.setItem('userId', userId);
+
+                // Redirect to the index page after a short delay
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // Redirect to habit tracker page
+                }, 2000); // 2 seconds delay
+            })
+            .catch(error => {
+                // Handle errors
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

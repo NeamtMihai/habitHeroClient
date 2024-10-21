@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Habit Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="full-page-background" id="background"></div>
+
+    <div class="register-container">
+        <h1>Create an Account</h1>
+        <form id="registerForm">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <p id="success-message" style="color:green; display:none;"></p>
+        <p id="error-message" style="color:red; display:none;"></p>
+        <p>Already have an account? <a href="login.html">Login here</a>.</p>
+    </div>
+</div>
+    <script>
+         const backgrounds = ['flames.gif', 'lightning.gif', 'waves.gif', 'stars.gif'];
+        const randomBackground = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+        document.getElementById('background').style.backgroundImage = `url('${randomBackground}')`;
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+
+            // Simple validation
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+
+            // Prepare the data for registration
+            const data = {
+                name: username,
+                pass: password
+            };
+
+            // Replace 'your_api_key_here' with your actual API key
+            const apiKey = 'elvetia_tara_faina';
+
+            // Send registration request
+            fetch('https://habitheroserver-production.up.railway.app/register', {
+                method: 'POST',
+                headers: {
+                    'Authorization': apiKey,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Registration failed: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle successful registration
+                successMessage.textContent = 'Registration successful! Redirecting to login...';
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Redirect to the login page after a short delay
+                setTimeout(() => {
+                    window.location.href = 'login.html'; // Redirect to login page
+                }, 2000); // 2 seconds delay
+            })
+            .catch(error => {
+                // Handle errors
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
