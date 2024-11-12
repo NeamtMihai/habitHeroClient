@@ -4,7 +4,21 @@ let userId = ''; // Specify the user ID
 const backEndUrl = 'https://habitheroserver-production.up.railway.app';
 const apiKey = 'elvetia_tara_faina'; // Replace with your actual API key
 
+
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      location.reload();
+    }
+  });
+  
 document.addEventListener('DOMContentLoaded', function () {
+    const refreshInterval = 5000; // 5000 ms = 5 seconds
+
+    // setInterval(() => {
+    //     location.reload();
+    // }, refreshInterval);
+
     userId = sessionStorage.getItem('userId');
 
     if (!userId) {
@@ -22,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => response.json())
         .then(data => {
+            const characterNameDiv = document.getElementById("characterName");
+            characterNameDiv.innerText = `Hello ${data.name}`;
+
             const habits = data.habits;
             const habitContainer = document.getElementById('habitContainer');
             habitContainer.innerHTML = '';
