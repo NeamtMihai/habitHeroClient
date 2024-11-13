@@ -1,8 +1,9 @@
 let progressValues = {}; // Object to store the progress points for each habit
-
+let characterName = '';
 let userId = ''; // Specify the user ID
 const backEndUrl = 'https://habitheroserver-production.up.railway.app';
 const apiKey = 'elvetia_tara_faina'; // Replace with your actual API key
+const characterNameDiv = document.getElementById("characterName");
 
 
 
@@ -36,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(response => response.json())
         .then(data => {
-            const characterNameDiv = document.getElementById("characterName");
             characterNameDiv.innerText = `Hello ${data.name}`;
+            characterName = data.name;
 
             const habits = data.habits;
             const habitContainer = document.getElementById('habitContainer');
@@ -161,6 +162,7 @@ function updateHabitName(habitId, newName, habitTitleElement) {
 function updateCharacter() {
     const totalPoints = Object.values(progressValues).reduce((a, b) => a + b, 0);
     const characterImage = document.getElementById("characterImage");
+    characterNameDiv.innerText = `Hello ${characterName}, power: ${totalPoints}`;
 
     if (totalPoints >= 40) {
         characterImage.src = "character5.png";
